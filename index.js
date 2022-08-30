@@ -39,12 +39,35 @@ inquirer
     .then((response) => {
         employeeRoster.push(new Manager(response.managerName, response.managerId, response.managerEmail, response.managerOfficeNumber));
         CLC.CLS();
-        CLC.GREEN("Login succesful!");
+        CLC.BGGREEN();
+        CLC.WHITE("Login succesful!")
         mainMenu();
     }
     );
 
 function mainMenu() {
+    CLC.GREEN();
+    console.log("---- Roster Preview ----");
+    CLC.RST();
+    employeeRoster.map(a => {
+        // Color code employees by role
+        switch (a.getRole()) {
+            case 'Manager':
+                CLC.YELLOW();
+                break;
+            case 'Engineer':
+                CLC.BLUE();
+                break;
+            case 'Intern':
+                CLC.WHITE();
+                break;
+            default:
+                CLC.RED();
+                break;
+        }
+        process.stdout.write(`Role: ${a.getRole()}\t Name: ${a.name}\n`)
+    });
+    CLC.GREEN("------------------------")
 inquirer
     .prompt([
     {
@@ -102,7 +125,8 @@ inquirer
     ]).then((response) => {
         employeeRoster.push(new Intern(response.name, response.id, response.email, response.school));
         CLC.CLS();
-        CLC.GREEN(`Succesfully added Intern "${response.name}"`)
+        CLC.BGGREEN()
+        CLC.WHITE(`Succesfully added Intern "${response.name}"`);
         mainMenu();
     })
 }
@@ -134,14 +158,17 @@ inquirer
     ]).then((response) => {
         employeeRoster.push(new Engineer(response.name, response.id, response.email, response.github));
         CLC.CLS();
-        CLC.GREEN(`Succesfully added Engineer "${response.name}"`)
+        CLC.BGGREEN();
+        CLC.WHITE(`Succesfully added Engineer "${response.name}"`);
         mainMenu();
     })
 }
 
 function removeEmployee() {
     CLC.CLS();
+    CLC.BOLD();
     CLC.RED('**DANGER ZONE -- You are about to remove an employee from the roster**');
+    CLC.RST();
     var tempList = employeeRoster.slice(1).map(a => a.name);
     tempList.push("Quit");
 inquirer
@@ -166,17 +193,3 @@ inquirer
         mainMenu();
     })
 }
-
-
-/*
-{
-      type: 'list',
-      message: 'What would you like to do?',
-      choices: [
-        'Add an Intern',
-        'Add an Engineer',
-        'Add a Manager',
-        'View employee roster'
-      ],
-      name: 'userChoice',
-    },*/
