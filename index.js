@@ -1,1 +1,1 @@
-const commandLineController = require('./CLControl.js')
+const commandLineController = require('./lib/CLControl.jsl.js')
