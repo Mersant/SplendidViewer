@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-
+const fs = require('fs');
 const Manager = require('./src/Manager');
 const Engineer = require('./src/Engineer');
 const Intern = require('./src/Intern');
@@ -92,7 +92,70 @@ inquirer
             removeEmployee();
         }
         else {
-            return
+            // First, generate the HTML code
+            var html =
+            `<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Team Roster</title>
+                <link rel="stylesheet" href="./reset.css">
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" rel='stylesheet' type='text/css'>
+                <link rel="stylesheet" href="./style.css">
+            </head>
+            <body>
+                <header>My Team</header>`;
+            for(i=0; i<employeeRoster.length; i++) {
+                var iconAddr;
+                var additionalInfo;
+                if(employeeRoster[i].getRole() == 'Manager') {
+                    iconAddr = '../icons/glasses.png';
+                    additionalInfo = `<li>Office Number: ${employeeRoster[i].officeNumber}</li>`;
+                } else if(employeeRoster[i].getRole() == 'Engineer') {
+                    iconAddr = '../icons/pcb.png';
+                    additionalInfo = `<li>GitHub Username: <a href="https://github.com/${employeeRoster[i].getGithub()}" target="_blank" rel="noopener noreferrer">${employeeRoster[i].getGithub()}</a></li>`;
+                } else {
+                    iconAddr = '../icons/scholar.png';
+                    additionalInfo = `<li>School Name: ${employeeRoster[i].getSchool()}</li>`;
+                }
+                html +=
+                `<div class="employeeCard">
+                <div class="employeeCardTitle">
+                <img src="${iconAddr}">
+                <h1>${employeeRoster[i].getName()}</h1>
+                <h2>${employeeRoster[i].getRole()}</h2>
+                </div>
+                <ul>
+                    <li>ID: ${employeeRoster[i].getId()}</li>
+                    <li>Email: <a href="mailto:${employeeRoster[i].getEmail()}">${employeeRoster[i].getEmail()}</a></li>
+                    ${additionalInfo}
+                </ul>
+            </div>`
+            }
+            html += 
+                `</body>
+                </html>`;
+
+            if (fs.existsSync(`${__dirname}\\dist\\index.html`)) {
+                CLC.RED();
+                try {
+                    fs.unlinkSync(`${__dirname}\\dist\\index.html`)
+                    console.log('Deleted old HTML file')
+                } catch(err) {
+                    console.error(err);
+                }
+            }
+            fs.appendFile(`${__dirname}\\dist\\index.html`, 
+            html,
+            function (err) {
+                if (err) throw err;
+                CLC.GREEN();
+                console.log(`Saved! Path is ${__dirname}\\dist\\index.html`);
+                require('child_process').exec(`start "" "${__dirname}\\dist"`);
+                CLC.RST();
+            })
         }
     })
 }
@@ -169,6 +232,7 @@ function removeEmployee() {
     CLC.BOLD();
     CLC.RED('**DANGER ZONE -- You are about to remove an employee from the roster**');
     CLC.RST();
+    
     var tempList = employeeRoster.slice(1).map(a => a.name);
     tempList.push("Quit");
 inquirer

@@ -1,0 +1,51 @@
+body {
+    background-color: rgb(40, 40, 40);
+    color: #4A8069;
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    background-color: #4A8069;
+    color: white;
+    text-align: center;
+    font-size: 200%;
+    padding: 20px;
+}
+
+.employeeCard {
+    display: inline-block;
+    padding: 10px;
+    margin: 20px;
+    border: #4A8069;
+    border-width: 3px;
+    border-radius: 5px;
+    border-style: solid;
+}
+.employeeCard ul {
+    padding: 5px;
+}
+.employeeCardTitle {
+    background-color: #4A8069;
+    color: white;
+}
+.employeeCardTitle img {
+    position: inline-block;
+    max-width: 55px;
+    max-height: 40px;
+    margin: 5px;
+}
+.employeeCardTitle h1 {
+    font-size: 130%;
+    padding: 3px;
+}
+.employeeCardTitle h2 {
+    font-size: 110%;
+    padding: 3px;
+}
+
+a {
+    color: #4A8069;
+}
+a:hover {
+    color: #6dba99;
+}
