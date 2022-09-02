@@ -12,8 +12,12 @@ header {
     padding: 20px;
 }
 
+/* employeeCard is the div that contains all of an employee's information */
 .employeeCard {
     display: inline-block;
+    vertical-align: top;
+    height: 200px;
+    width: 200px;
     padding: 10px;
     margin: 20px;
     border: #4A8069;
@@ -28,6 +32,7 @@ header {
     background-color: #4A8069;
     color: white;
 }
+/* Icon that corresponds to each job title */
 .employeeCardTitle img {
     position: inline-block;
     max-width: 55px;
