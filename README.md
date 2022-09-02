@@ -9,6 +9,7 @@
     * [Guidlines for Contributing](#guidlines-for-contributing)
     * [License](#license)
 
+![image](https://user-images.githubusercontent.com/102173297/188236643-f7cbe66a-4bb8-40bf-b04e-d5ca699b9690.png)
 
 ## Description
 Splendid Viewer is a splendid application for easily adding and viewing employee information. It will generate an HTML page containing information about each employee and their manager's, such as GitHub usernames, schools, emails and more. You can find a walkthrough video of this application at https://youtu.be/DFBcaq6o_z8 for instructions on how to use it.
